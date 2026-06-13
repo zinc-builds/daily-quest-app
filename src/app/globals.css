@@ -1,0 +1,78 @@
+@import "tailwindcss";
+
+:root {
+  --marathon-black: #000000;
+  --marathon-lime: #c0fe04;
+  --marathon-white: #ffffff;
+  --marathon-gray: #a1a1a1;
+  --marathon-dark-gray: #111111;
+  --marathon-border: rgba(255, 255, 255, 0.2);
+  --marathon-lime-glow: rgba(192, 254, 4, 0.4);
+}
+
+html,
+body {
+  background: var(--marathon-black);
+  color: var(--marathon-white);
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Marathon monospace data */
+.font-mono-data {
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  letter-spacing: 0.05em;
+}
+
+/* Bracket links */
+.bracket-link::before {
+  content: '[ ';
+  color: var(--marathon-lime);
+}
+.bracket-link::after {
+  content: ' ]';
+  color: var(--marathon-lime);
+}
+
+/* Neon lime accent utilities */
+.text-lime {
+  color: var(--marathon-lime);
+}
+.bg-lime {
+  background-color: var(--marathon-lime);
+}
+.border-lime {
+  border-color: var(--marathon-lime);
+}
+
+/* Scanline overlay */
+.scanlines::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.02) 0px,
+    rgba(255, 255, 255, 0.02) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  z-index: 50;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--marathon-black);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--marathon-lime);
+}
+
+/* Selection */
+::selection {
+  background: var(--marathon-lime);
+  color: var(--marathon-black);
+}

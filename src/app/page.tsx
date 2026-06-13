@@ -11,6 +11,7 @@ import { getCurrentBattlepass, getRewardsForBattlepass } from '@/lib/battlepass'
 import { today } from '@/lib/dates';
 import { defaultDailyGoals, createDefaultBattlepass } from '@/lib/sample-data';
 import type { AppState } from '@/lib/types';
+import { generateId } from '@/lib/uuid';
 
 // SSR-safe empty state. Real data (with UUIDs) is loaded in useEffect.
 const emptyState: AppState = {
@@ -26,7 +27,7 @@ function seedIfEmpty(state: AppState): AppState {
   if (next.dailyGoals.length === 0) {
     next.dailyGoals = defaultDailyGoals.map((g) => ({
       ...g,
-      id: crypto.randomUUID(),
+      id: generateId(),
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     }));

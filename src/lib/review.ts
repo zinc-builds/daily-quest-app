@@ -2,6 +2,7 @@ import type { Battlepass, BattlepassReward, DailyCompletion, DailyGoal, MonthlyR
 import { isPerfectDay, maxXpForActiveDay, PERFECT_DAY_BONUS } from './xp';
 import { daysInMonth, isDateInMonth } from './dates';
 import { getRewardsForBattlepass } from './battlepass';
+import { generateId } from '@/lib/uuid';
 
 export function buildMonthlyReview(
   battlepass: Battlepass,
@@ -44,7 +45,7 @@ export function buildMonthlyReview(
   const rewardsClaimed = bpRewards.filter((r) => r.claimed).length;
 
   return {
-    id: crypto.randomUUID(),
+    id: generateId(),
     battlepassId: battlepass.id,
     totalXpEarned,
     totalXpAvailable,

@@ -14,6 +14,7 @@ import {
   DataValue,
 } from './MarathonUI';
 import { Check, Minus, Pencil } from 'lucide-react';
+import { generateId } from '@/lib/uuid';
 
 function completionForGoal(
   completions: DailyCompletion[],
@@ -31,7 +32,7 @@ function completeGoal(
 ): DailyCompletion {
   const xp = calculateDailyXp(goal, true, value);
   const completion: DailyCompletion = {
-    id: crypto.randomUUID(),
+    id: generateId(),
     dailyGoalId: goal.id,
     date,
     completed: true,

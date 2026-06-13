@@ -15,6 +15,7 @@ import { defaultDailyGoals } from '@/lib/sample-data';
 import { defaultRewardLevels } from '@/lib/battlepass';
 import type { DailyGoal, Battlepass, BattlepassReward, TargetType, RewardType, AppState } from '@/lib/types';
 import { Trash2, Plus } from 'lucide-react';
+import { generateId } from '@/lib/uuid';
 
 const targetTypes: TargetType[] = ['checkbox', 'count', 'minutes', 'custom'];
 const rewardTypes: RewardType[] = ['treat', 'purchase', 'experience', 'rest', 'social', 'custom'];
@@ -57,7 +58,7 @@ export default function SetupPage() {
     if (state.dailyGoals.filter((g) => g.active).length === 0) {
       const goals = defaultDailyGoals.map((g) => ({
         ...g,
-        id: crypto.randomUUID(),
+        id: generateId(),
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
       }));
@@ -74,7 +75,7 @@ export default function SetupPage() {
 
   function addGoal() {
     const goal: DailyGoal = {
-      id: crypto.randomUUID(),
+      id: generateId(),
       name: 'New Daily',
       description: '',
       category: 'Custom',
@@ -105,7 +106,7 @@ export default function SetupPage() {
     }
     // save battlepass
     const existing = s.battlepasses.find((b) => b.month === month);
-    const bpId = existing?.id ?? crypto.randomUUID();
+    const bpId = existing?.id ?? generateId();
     const battlepass: Battlepass = {
       id: bpId,
       name: bpName || `${month} Battlepass`,
@@ -118,7 +119,7 @@ export default function SetupPage() {
     upsertBattlepass(battlepass);
 
     const rewardEntities: BattlepassReward[] = rewards.map((r) => ({
-      id: crypto.randomUUID(),
+      id: generateId(),
       battlepassId: bpId,
       ...r,
       unlocked: battlepass.xpEarned >= r.xpRequired,

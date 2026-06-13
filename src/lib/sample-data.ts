@@ -1,6 +1,7 @@
 import type { DailyGoal, Battlepass, BattlepassReward } from './types';
 import { monthRange } from './dates';
 import { defaultRewardLevels } from './battlepass';
+import { generateId } from '@/lib/uuid';
 
 export const defaultDailyGoals: Omit<DailyGoal, 'id' | 'createdAt' | 'updatedAt'>[] = [
   {
@@ -50,7 +51,7 @@ export const defaultDailyGoals: Omit<DailyGoal, 'id' | 'createdAt' | 'updatedAt'
 
 export function createDefaultBattlepass(month: string): { battlepass: Battlepass; rewards: BattlepassReward[] } {
   const { start, end } = monthRange(new Date(`${month}-01`));
-  const battlepassId = crypto.randomUUID();
+  const battlepassId = generateId();
   const battlepass: Battlepass = {
     id: battlepassId,
     name: `${month} Battlepass`,
@@ -61,7 +62,7 @@ export function createDefaultBattlepass(month: string): { battlepass: Battlepass
     createdAt: new Date().toISOString(),
   };
   const rewards: BattlepassReward[] = defaultRewardLevels().map((r) => ({
-    id: crypto.randomUUID(),
+    id: generateId(),
     battlepassId,
     ...r,
     unlocked: false,

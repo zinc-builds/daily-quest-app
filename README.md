@@ -23,7 +23,17 @@ A personal improvement system built around five daily goals, XP progression, and
 npm run dev      # start dev server
 npm run build    # static export to ./dist
 npm test         # run tests
+npm run serve    # serve ./dist on 0.0.0.0:3000 (for local/Tailscale viewing)
 ```
+
+## Local viewing (e.g. over Tailscale)
+
+```bash
+npm run build
+npm run serve
+```
+
+Then open `http://<tailscale-ip>:3000`.
 
 ## Deployment
 

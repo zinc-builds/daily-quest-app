@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "vitest run"
+    "test": "vitest run",
+    "serve": "serve dist -l tcp://0.0.0.0:3000 --no-clipboard"
   },
   "dependencies": {
     "clsx": "^2.1.1",
@@ -32,6 +33,7 @@
     "eslint-config-next": "16.2.9",
     "happy-dom": "^20.10.3",
     "jsdom": "^29.1.1",
+    "serve": "^14.2.6",
     "tailwindcss": "^4",
     "typescript": "^5",
     "vitest": "^4.1.8"

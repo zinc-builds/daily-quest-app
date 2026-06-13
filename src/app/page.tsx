@@ -5,46 +5,50 @@ import { Nav } from '@/components/Nav';
 import { DailyList } from '@/components/DailyList';
 import { BattlepassTrack } from '@/components/BattlepassTrack';
 import { Panel, SectionHeader, DataLabel, DataValue, ProgressBar } from '@/components/MarathonUI';
-import { loadState, upsertBattlepass, upsertRewards } from '@/lib/storage';
+import { loadState, saveState } from '@/lib/storage';
 import { xpForDate, isPerfectDay, maxXpForActiveDay } from '@/lib/xp';
 import { getCurrentBattlepass, getRewardsForBattlepass } from '@/lib/battlepass';
 import { today } from '@/lib/dates';
 import { defaultDailyGoals, createDefaultBattlepass } from '@/lib/sample-data';
-import type { AppState, DailyGoal, DailyCompletion, Battlepass, BattlepassReward } from '@/lib/types';
+import type { AppState } from '@/lib/types';
 
-function initState(): AppState {
-  let state = loadState();
+// SSR-safe empty state. Real data (with UUIDs) is loaded in useEffect.
+const emptyState: AppState = {
+  dailyGoals: [],
+  completions: [],
+  battlepasses: [],
+  rewards: [],
+  reviews: [],
+};
 
-  // Seed default daily goals if none exist
-  if (state.dailyGoals.length === 0) {
-    const goals = defaultDailyGoals.map((g) => ({
+function seedIfEmpty(state: AppState): AppState {
+  const next = { ...state };
+  if (next.dailyGoals.length === 0) {
+    next.dailyGoals = defaultDailyGoals.map((g) => ({
       ...g,
       id: crypto.randomUUID(),
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     }));
-    state = { ...state, dailyGoals: goals };
   }
-
-  // Seed current month battlepass if none exists
   const currentMonth = today().slice(0, 7);
-  const existingBp = getCurrentBattlepass(state.battlepasses);
+  const existingBp = getCurrentBattlepass(next.battlepasses);
   if (!existingBp) {
     const { battlepass, rewards } = createDefaultBattlepass(currentMonth);
-    state.battlepasses = [...state.battlepasses, battlepass];
-    state.rewards = [...state.rewards, ...rewards];
+    next.battlepasses = [...next.battlepasses, battlepass];
+    next.rewards = [...next.rewards, ...rewards];
   }
-
-  return state;
+  saveState(next);
+  return next;
 }
 
 export default function TodayPage() {
-  const [mounted, setMounted] = useState(false);
-  const [state, setState] = useState<AppState>(() => initState());
+  const [state, setState] = useState<AppState>(emptyState);
 
   useEffect(() => {
-    setMounted(true);
-    refresh();
+    const loaded = loadState();
+    const seeded = seedIfEmpty(loaded);
+    setState(seeded);
   }, []);
 
   function refresh() {
@@ -62,14 +66,6 @@ export default function TodayPage() {
 
   const battlepass = getCurrentBattlepass(state.battlepasses);
   const rewards = battlepass ? getRewardsForBattlepass(state.rewards, battlepass.id) : [];
-
-  if (!mounted) {
-    return (
-      <div className="min-h-screen bg-black text-white flex items-center justify-center">
-        <span className="font-mono-data text-lime animate-pulse">[ SYSTEM BOOT ]</span>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-black text-white">

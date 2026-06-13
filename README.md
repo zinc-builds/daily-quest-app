@@ -1,36 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# DAILY QUEST
 
-## Getting Started
+A personal improvement system built around five daily goals, XP progression, and a monthly real-life reward battlepass. Inspired by game quest screens — designed with a Marathon-style sci-fi terminal aesthetic.
 
-First, run the development server:
+## Features
+
+- **Today Screen**: five daily objectives, XP tracking, perfect-day bonus, battlepass progress.
+- **Setup**: configure dailies and monthly battlepass reward tiers.
+- **Battlepass**: view reward track, claim unlocked rewards.
+- **Monthly Review**: summary stats, completion rates, reflection prompts.
+- **Mission Log**: daily history table and archived reviews.
+
+## Tech Stack
+
+- Next.js 16 + React 19 + TypeScript
+- Tailwind CSS 4
+- Local Storage persistence (single-user, no backend required)
+- Vitest + React Testing Library
+
+## Scripts
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run dev      # start dev server
+npm run build    # static export to ./dist
+npm test         # run tests
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Deployment
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The repo is configured for static export. To deploy on Vercel:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Authenticate the Vercel CLI: `vercel login`
+2. Run: `vercel --prod`
 
-## Learn More
+Or connect the GitHub repo to a Vercel project via the dashboard.
 
-To learn more about Next.js, take a look at the following resources:
+## Aesthetic Reference
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Inspired by [Marathon](https://www.marathonthegame.com/): black backgrounds, neon lime (`#c0fe04`) accents, sharp rectangular UI, terminal-style brackets, monospace data labels, and scanline overlay.

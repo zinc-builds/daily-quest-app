@@ -37,12 +37,13 @@ Then open `http://<tailscale-ip>:3000`.
 
 ## Deployment
 
-The repo is configured for static export. To deploy on Vercel:
+Live at: https://daily-quest-app-inky.vercel.app
 
-1. Authenticate the Vercel CLI: `vercel login`
-2. Run: `vercel --prod`
+To deploy manually with the Vercel CLI:
 
-Or connect the GitHub repo to a Vercel project via the dashboard.
+```bash
+vercel --prod
+```
 
 ## Aesthetic Reference
 
